@@ -1,0 +1,5 @@
+spacy>=2.3.0
+en_core_web_sm==2.3.0
+en_core_web_lg==2.3.0
+pt_core_news_lg==2.3.0
+lemminflect>=0.2.1

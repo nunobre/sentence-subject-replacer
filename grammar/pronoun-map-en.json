@@ -1,0 +1,212 @@
+[
+	{
+		"type" : "personal",
+		"value" : "i",
+		"person" : "first",
+		"number" : "singular"
+	},
+	{
+		"type" : "personal",
+		"value" : "me",
+		"person" : "first",
+		"number" : "singular"
+	},
+	{
+		"type" : "personal",
+		"value" : "we",
+		"person" : "first",
+		"number" : "plural"
+	},
+	{
+		"type" : "personal",
+		"value" : "us",
+		"person" : "first",
+		"number" : "plural"
+	},
+	{
+		"type" : "personal",
+		"value" : "you",
+		"person" : "second",
+		"number" : "plural"
+	},
+	{
+		"type" : "personal",
+		"value" : "she",
+		"person" : "third",
+		"number" : "singular"
+	},
+	{
+		"type" : "personal",
+		"value" : "her",
+		"person" : "third",
+		"number" : "singular"
+	},
+	{
+		"type" : "personal",
+		"value" : "he",
+		"person" : "third",
+		"number" : "singular"
+	},
+	{
+		"type" : "personal",
+		"value" : "him",
+		"person" : "third",
+		"number" : "singular"
+	},
+	{
+		"type" : "personal",
+		"value" : "it",
+		"person" : "third",
+		"number" : "singular"
+	},
+	{
+		"type" : "personal",
+		"value" : "they",
+		"person" : "third",
+		"number" : "plural"
+	},
+	{
+		"type" : "personal",
+		"value" : "them",
+		"person" : "third",
+		"number" : "plural"
+	},
+	{
+		"type" : "reflexive",
+		"value" : "myself",
+		"person" : "first",
+		"number" : "singular"
+	},
+	{
+		"type" : "reflexive",
+		"value" : "ourselves",
+		"person" : "first",
+		"number" : "plural"
+	},
+	{
+		"type" : "reflexive",
+		"value" : "yourself",
+		"person" : "second",
+		"number" : "singular"
+	},
+	{
+		"type" : "reflexive",
+		"value" : "yourselves",
+		"person" : "second",
+		"number" : "plural"
+	},
+	{
+		"type" : "reflexive",
+		"value" : "himself",
+		"person" : "third",
+		"number" : "singular"
+	},
+	{
+		"type" : "reflexive",
+		"value" : "herself",
+		"person" : "third",
+		"number" : "singular"
+	},
+	{
+		"type" : "reflexive",
+		"value" : "itself",
+		"person" : "third",
+		"number" : "singular"
+	},
+	{
+		"type" : "reflexive",
+		"value" : "themselves",
+		"person" : "third",
+		"number" : "plural"
+	},
+	{
+		"type" : "possessive",
+		"value" : "my",
+		"person" : "None",
+		"number" : "singular"
+	},
+	{
+		"type" : "possessive",
+		"value" : "your",
+		"person" : "None",
+		"number" : "singular"
+	},
+	{
+		"type" : "possessive",
+		"value" : "his",
+		"person" : "None",
+		"number" : "singular"
+	},
+	{
+		"type" : "possessive",
+		"value" : "her",
+		"person" : "None",
+		"number" : "singular"
+	},
+	{
+		"type" : "possessive",
+		"value" : "its",
+		"person" : "None",
+		"number" : "singular"
+	},
+	{
+		"type" : "possessive",
+		"value" : "our",
+		"person" : "None",
+		"number" : "plural"
+	},
+	{
+		"type" : "possessive",
+		"value" : "your",
+		"person" : "None",
+		"number" : "plural"
+	},
+	{
+		"type" : "possessive",
+		"value" : "their",
+		"person" : "None",
+		"number" : "plural"
+	},
+	{
+		"type" : "possessive",
+		"value" : "mine",
+		"person" : "None",
+		"number" : "singular"
+	},
+	{
+		"type" : "possessive",
+		"value" : "yours",
+		"person" : "None",
+		"number" : "singular"
+	},
+	{
+		"type" : "possessive",
+		"value" : "his",
+		"person" : "None",
+		"number" : "singular"
+	},
+	{
+		"type" : "possessive",
+		"value" : "hers",
+		"person" : "None",
+		"number" : "singular"
+	},
+	{
+		"type" : "possessive",
+		"value" : "ours",
+		"person" : "None",
+		"number" : "plural"
+	},
+	{
+		"type" : "possessive",
+		"value" : "yours",
+		"person" : "None",
+		"number" : "plural"
+	},
+	{
+		"type" : "possessive",
+		"value" : "theirs",
+		"person" : "None",
+		"number" : "plural"
+	}
+]

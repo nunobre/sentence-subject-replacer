@@ -1,0 +1,6 @@
+bin/
+nlp/
+.pydevproject
+**/__pycache__/
+.settings/
+.project
