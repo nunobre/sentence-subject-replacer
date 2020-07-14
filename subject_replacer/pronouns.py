@@ -1,5 +1,6 @@
 import json
 
+
 class Pronoun(object):
 	"""Pronoun representation"""
 	def __init__(self, pronoun_type, value, person, number):
@@ -37,13 +38,13 @@ class PronounCollection(object):
 		pronoun = self._pronoun_collection[value]
 		return pronoun.number
 
+
 class PronounCollectionIterator(object):
 	"""docstring for PronounCollectionIterator"""
-	
+
 	def __init__(self, pronoun_collection):
 		super(PronounCollectionIterator, self).__init__()
 		self._pronoun_collection = list(pronoun_collection.list())
-		
 
 	def __next__(self):
 		if len(self._pronoun_collection) > 0:
@@ -51,9 +52,10 @@ class PronounCollectionIterator(object):
 
 		raise StopIteration
 
+
 class PronounCollectionBuilder(object):
 	"""Pronoun collection factory"""
-	_filename = "pronoun_map.json"
+	_filename = "../config/pronoun-map-en.json"
 
 	def __init__(self, filename=None):
 		super(PronounCollectionBuilder, self).__init__()
@@ -65,7 +67,6 @@ class PronounCollectionBuilder(object):
 		with open(self._filename, "r") as read_file:
 			pronoun_json = json.load(read_file)
 
-
 		for record in pronoun_json:
 			current_pronoun = Pronoun(
 				record["type"],
@@ -76,27 +77,3 @@ class PronounCollectionBuilder(object):
 
 	def get_pronoun_collection(self):
 		return self._pronoun_collection
-
-def main():
-	
-	pronoun_collection_builder = PronounCollectionBuilder()
-	pronoun_collection = pronoun_collection_builder.\
-								get_pronoun_collection()
-
-
-	for pronoun in pronoun_collection:
-		print(pronoun.type,
-			pronoun.value,
-			pronoun.person,
-			pronoun.number)
-		
-	print(pronoun_collection.person("i"))
-	print(pronoun_collection.number("i"))
-
-if __name__ == "__main__":
-	#try:
-	main()
-
-		
-
-

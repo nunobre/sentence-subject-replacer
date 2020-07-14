@@ -5,13 +5,13 @@ from __future__ import unicode_literals, print_function
 import spacy
 import sys
 import lemminflect
-import json
-from pronouns import PronounCollectionBuilder
+from subject_replacer import pronouns
 
-#from spacy import displacy
 
-pronoun_map_builder = PronounCollectionBuilder("../grammar/pronoun-map-en.json")
-	
+# from spacy import displacy
+
+pronoun_map_builder = pronouns.PronounCollectionBuilder("../config/pronoun-map-en.json")
+
 pronoun_map = pronoun_map_builder.get_pronoun_collection()
 
 pos_person_map = {
@@ -83,7 +83,7 @@ def replace_phrase(sentence, replaceable_phrase, newPhrase):
 
 	return newSentence
 
-def inflect_token(token, person, number):
+def inflect_token(root_token, token, person, number):
 	'''
 	Returns the inflection of a token's lemma, given the provided rules
 	'''
@@ -93,7 +93,7 @@ def inflect_token(token, person, number):
 	print(f"lemma is '{token.lemma_}'")
 	print(f"Inflect to '{person}' person  '{number}'")
 
-	#if token.orth_ in pronoun_map.values()
+	# if token.orth_ in pronoun_map.values()
 
 	return inflection
 
@@ -118,6 +118,7 @@ def get_person(token):
 
 	return person
 
+
 def get_noun_chunk_root(noun_chunk_document):
 	root_token = ''
 
@@ -127,11 +128,46 @@ def get_noun_chunk_root(noun_chunk_document):
 
 	return root_token
 
-def parse_noun_chunk(noun_chunk_document):
-	root = get_noun_chunk_root(noun_chunk_document)
-	print(f"root token is {root.orth_}")
 
-	return  get_person(root), get_number(root)
+def parse_noun_chunk(noun_chunk_document):
+	root_token = get_noun_chunk_root(noun_chunk_document)
+	print(f"root token is {root_token.orth_}")
+
+	return root_token, get_person(root_token), get_number(root_token)
+
+
+def replace_subject(original_text, new_subject_text):
+	"""
+	receives two strings and returns a new string where the subject on 
+	the orignial_text the new_subject_text 
+	"""
+
+	nlp = spacy.load("en_core_web_lg")
+
+	original_doc = nlp(original_text)
+	new_subject_doc = nlp(new_subject_text)
+
+	replaceable_phrase, inflection_list = parse_sentence(original_doc)
+
+	print(f"inflection list is {inflection_list}")
+
+	new_sentence = replace_phrase(original_doc,
+								replaceable_phrase,new_subject_doc)
+
+	noun_chunk_root, person, number = parse_noun_chunk(new_subject_doc)
+	print(f"root token is {person} person, {number}")
+
+	return_sentence = []
+	return_string = ''
+	for token in new_sentence:
+		if token in inflection_list:
+			result = inflect_token(noun_chunk_root, token, person, number)
+			return_string += " " + result
+		else:
+			return_sentence.append(token)
+			return_string += " " + token.orth_
+
+	return return_string
 
 
 def main():
@@ -140,55 +176,19 @@ def main():
 		raise Exception(f"Usage: {sys.argv[0]} '<original sentence>' \
 			'<nominal clause to replace>'")
 
-	opts = [opt for opt in sys.argv[1:] if opt.startswith("-")]
+	# opts = [opt for opt in sys.argv[1:] if opt.startswith("-")]
 
+	replace_text = sys.argv.pop()
+	original_text = sys.argv.pop()
 
-	replaceText = sys.argv.pop()
-	originalText= sys.argv.pop()
+	new_text = replace_subject(original_text, replace_text)
 
-
-
-	nlp = spacy.load("en_core_web_lg")
-	
-	originalDoc = nlp(originalText)
-	replaceDoc = nlp(replaceText)
-
-	#parse_noun_chunk(replaceDoc)
-
-	#return 0
-
-	replaceable_phrase, inflection_list = parse_sentence(originalDoc)
-	
-	print(f"inflection list is {inflection_list}")
-	
-	returnSentence = replace_phrase(originalDoc, replaceable_phrase, 
-		replaceDoc)
-
-	person, number = parse_noun_chunk(replaceDoc)
-	print(f"root token is {person} person, {number}")
-
-	for token in returnSentence:
-		if token in inflection_list:
-			inflect_token(token, person, number)
-		else:
-			print(token.orth_)
-
-	#for token in replaceDoc:
-	#	print(token.text, token.dep_, token.head.text, token.head.pos_,
-	#		[child for child in token.children])
-
-	#if printoutput:
-	#	output=displacy.render(doc, style='dep')
-	#	#displacy.serve(doc, style='dep')
-	#	print(output)
+	print(new_text)
 
 
 if __name__ == "__main__":
-    #try:
-    main()
-    #except Exception as e:
-   # 	print(e)
-   # 	SystemExit(e)
-    
-
-	
+	try:
+		main()
+	except Exception as e:
+		print(e)
+		SystemExit(e)
