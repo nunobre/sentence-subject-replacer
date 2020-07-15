@@ -5,31 +5,18 @@ from __future__ import unicode_literals, print_function
 import spacy
 import sys
 import lemminflect
-from subject_replacer import pronouns
+from subject_replacer import grammar_element
 
+pos_map_filename = "../config/pos-map-en.json"
+pronoun_map_filename = "../config/pronoun-map-en.json"
 
-# from spacy import displacy
+pronoun_map_builder = grammar_element.GrammarElementCollectionBuilder(pronoun_map_filename)
 
-pronoun_map_builder = pronouns.PronounCollectionBuilder("../config/pronoun-map-en.json")
+pronoun_map = pronoun_map_builder.get_element_collection()
 
-pronoun_map = pronoun_map_builder.get_pronoun_collection()
+pos_map_builder = grammar_element.GrammarElementCollectionBuilder(pos_map_filename)
 
-pos_person_map = {
-	'subject': 'verb',
-	'NN': '3rd',
-	'NNP': '3rd',
-	'NNS': '3rd',
-	'NNPS': '3rd',
-	'PRP': 'VBP'
-}
-
-pos_number_map = {
-	'POS': 'number',
-	'NN': 'singular',  # noun singular : verb
-	'NNP': 'singular',  # noun singular : verb
-	'NNS': 'plural',
-	'NNPS': 'plural'
-}
+pos_map = pos_map_builder.get_element_collection()
 
 
 def parse_sentence(sentenceToParse):
@@ -85,17 +72,26 @@ def replace_phrase(sentence, replaceable_phrase, newPhrase):
 	return newSentence
 
 
-def inflect_token(root_token, token, person, number):
+def inflect_token(root_token, token):
 	'''
 	Returns the inflection of a token's lemma, given the provided rules
 	'''
 	inflection = token.orth_
 
+	person = get_person(root_token)
+	number = get_number(root_token)
 	print(f"Received token '{inflection}' to inflect")
 	print(f"lemma is '{token.lemma_}'")
 	print(f"Inflect to '{person}' person  '{number}'")
+	
 
-	# if token.orth_ in pronoun_map.values()
+	# if root_token is personal pronoun get specific pronoun rules
+	# if token is verb 'to be' get specific verb rules
+	# otherwise inflect using penn tree bank
+
+	pos_tag = pos_map.filter(person, number)
+
+	inflection = token._.inflect(pos_tag)
 
 	return inflection
 
@@ -107,7 +103,7 @@ def get_number(token):
 		number = pronoun_map.person(token.lower_)
 		return number
 
-	number = pos_number_map[token.tag_]
+	number = pos_map.number(token.tag_)
 
 	return number
 
@@ -118,7 +114,7 @@ def get_person(token):
 		person = pronoun_map.number(token.lower_)
 		return person
 
-	person = pos_person_map[token.tag_]
+	person = pos_map.person(token.tag_)
 
 	return person
 
@@ -161,14 +157,16 @@ def replace_subject(original_text, new_subject_text):
 	new_sentence = replace_phrase(original_doc,
 								replaceable_phrase, new_subject_doc)
 
-	noun_chunk_root, person, number = parse_noun_chunk(new_subject_doc)
-	print(f"root token is {person} person, {number}")
+	# noun_chunk_root, person, number = parse_noun_chunk(new_subject_doc)
+	noun_chunk_root = get_noun_chunk_root(new_subject_doc)
+	# print(f"root token is {person} person, {number}")
 
 	return_sentence = []
 	return_string = ''
 	for token in new_sentence:
 		if token in inflection_list:
-			result = inflect_token(noun_chunk_root, token, person, number)
+			# result = inflect_token(noun_chunk_root, token, person, number)
+			result = inflect_token(noun_chunk_root, token)
 			return_string += " " + result
 		else:
 			return_sentence.append(token)

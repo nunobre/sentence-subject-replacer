@@ -1,0 +1,32 @@
+[
+	{
+		"type" : "noun",
+		"value" : "NN",
+		"person" : "3rd",
+		"number" : "singular"
+	},
+	{
+		"type" : "noun",
+		"value" : "NNS",
+		"person" : "3rd",
+		"number" : "plural"
+	},
+	{
+		"type" : "noun",
+		"value" : "NNP",
+		"person" : "3rd",
+		"number" : "singular"
+	},
+	{
+		"type" : "noun",
+		"value" : "NNP",
+		"person" : "3rd",
+		"number" : "plural"
+	},
+	{
+		"type" : "verb",
+		"value" : "VBZ",
+		"person" : "3rd",
+		"number" : "singular"
+	}
+]

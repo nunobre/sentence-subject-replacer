@@ -25,12 +25,12 @@ class ReplaceSubjectTestCase(unittest.TestCase):
     def setUpClass(cls):
         load_test_data()
         print('')
-        print('setUpClass')
+        print('Starting tests')
 
     @classmethod
     def tearDownClass(cls):
         print('')
-        print('tearDownClass')
+        print('Stopping tests')
 
     def test_subject_replacer(self):
         print('')
