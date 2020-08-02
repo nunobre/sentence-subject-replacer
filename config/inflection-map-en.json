@@ -1,0 +1,38 @@
+[
+	{
+		"lemma": "be",
+		"person": "first",
+		"number": "singular",
+		"inflection": "am"
+	},
+	{
+		"lemma": "be",
+		"person": "second",
+		"number": "singular",
+		"inflection": "are"
+	},
+	{
+		"lemma": "be",
+		"person": "third",
+		"number": "singular",
+		"inflection": "is"
+	},
+	{
+		"lemma": "be",
+		"person": "first",
+		"number": "plural",
+		"inflection": "are"
+	},
+	{
+		"lemma": "be",
+		"person": "second",
+		"number": "plural",
+		"inflection": "are"
+	},
+	{
+		"lemma": "be",
+		"person": "third",
+		"number": "plural",
+		"inflection": "are"
+	}
+]
